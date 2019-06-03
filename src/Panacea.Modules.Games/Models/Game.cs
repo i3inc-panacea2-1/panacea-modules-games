@@ -10,12 +10,13 @@ using System.Windows.Media;
 
 namespace Panacea.Modules.Games.Models
 {
+    [DataContract]
     public class Game : ServerItem
     {
         public Game()
             : base()
         {
-
+           
         }
         [IsTranslatable(72)]
         [DataMember(Name = "description")]
