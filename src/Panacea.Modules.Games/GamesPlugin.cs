@@ -51,15 +51,18 @@ namespace Panacea.Modules.Games
         {
             var game = item as Game;
             if (game == null) return;
-            if(_core.TryGetBilling(out IBillingManager _billing)){
-                if (! _billing.IsPluginFree("Games")){
+            if (_core.TryGetBilling(out IBillingManager _billing))
+            {
+                if (!_billing.IsPluginFree("Games"))
+                {
                     var service = await _billing.GetServiceForItemAsync(_translator.Translate("This Game requires service."), "Games", game);
-                    if (service==null)
+                    if (service == null)
                     {
                         return;
                     }
                 }
             }
+            _core.WebSocket.PopularNotify("Games", "Game", game.Id, _core.UserService.User?.Id ?? "0");
             switch (game.GameType)
             {
                 case "Flash":
