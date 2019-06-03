@@ -47,7 +47,8 @@ namespace Panacea.Modules.Games.ViewModels
                 {
                     _ui.HideKeyboard();
                     var gmp = new GameMiniPresenterViewModel(_core, _plugin, arg as Game);
-                    var pop = _ui.ShowPopup(gmp, "", PopupType.None);
+                    var pop = _ui.ShowPopup<object>(gmp, "", PopupType.None);
+                    _core.Logger.Info(this, "WTF");
                 } else
                 {
                     _core.Logger.Error(this, "ui manager not loaded");

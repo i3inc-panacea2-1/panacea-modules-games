@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Panacea.Controls;
 using Panacea.Core;
 using Panacea.Modularity.UiManager;
 using Panacea.Modules.Games.Models;
+using Panacea.Modules.Games.Views;
 using Panacea.Mvvm;
 
 namespace Panacea.Modules.Games.ViewModels
 {
-    [View(typeof(GameMiniPresenterViewModel))]
+    [View(typeof(GameMiniPresenter))]
     public class GameMiniPresenterViewModel : PopupViewModelBase<object>
     {
         private PanaceaServices _core;
@@ -23,7 +25,6 @@ namespace Panacea.Modules.Games.ViewModels
             set
             {
                 _game = value;
-                SetupCommands();
                 OnPropertyChanged();
             }
         }
@@ -33,16 +34,25 @@ namespace Panacea.Modules.Games.ViewModels
             _core = core;
             _plugin = plugin;
             _game = game;
+            SetupCommands();
         }
-
-        public RelayCommand ExecuteGameCommand { get; private set; }
-
         void SetupCommands()
         {
             var canExecute = CanExecute();
             ExecuteGameCommand = new RelayCommand(ExecuteGame,
             (arg) => canExecute);
         }
+
+        ICommand _executeGameCommand;
+        public ICommand ExecuteGameCommand {
+            get => _executeGameCommand;
+            protected set
+            {
+                _executeGameCommand = value;
+                OnPropertyChanged();
+            }
+        }
+
         bool CanExecute()
         {
             if (Game == null) return false;

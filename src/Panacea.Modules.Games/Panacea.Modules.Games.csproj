@@ -51,6 +51,9 @@
   <ItemGroup>
     <Compile Include="GamesProvider.cs" />
     <Compile Include="Models\Game.cs" />
+    <Compile Include="Models\GameCategory.cs" />
+    <Compile Include="Models\GameItem.cs" />
+    <Compile Include="Models\GetGamesCategoriesResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -65,6 +68,8 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="GamesPlugin.cs" />
+    <Compile Include="RatingToVisibilityConverter.cs" />
+    <Compile Include="StringNullToVisibilityConverter.cs" />
     <Compile Include="ViewModels\GameListViewModel.cs" />
     <Compile Include="ViewModels\GameMiniPresenterViewModel.cs" />
     <Compile Include="Views\GameList.xaml.cs">
