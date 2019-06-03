@@ -62,13 +62,12 @@ namespace Panacea.Modules.Games
                     }
                 }
             }
-            _core.WebSocket.PopularNotify("Games", "Game", game.Id, _core.UserService.User?.Id ?? "0");
             switch (game.GameType)
             {
                 case "Flash":
                     if (_core.TryGetWebBrowser(out IWebBrowserPlugin _browser))
                     {
-                        //TODO: POPULAR! _websocket.PopularNotify("Games", "Game", g.Id);
+                        _core.WebSocket.PopularNotify("Games", "Game", game.Id, _core.UserService.User?.Id ?? "0");
                         _browser.OpenUnmanaged(game.DataUrl.Url);
                     }
                     break;
