@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Panacea.Controls;
 using Panacea.Core;
+using Panacea.Modularity.Favorites;
 using Panacea.Modularity.UiManager;
 using Panacea.Modules.Games;
 using Panacea.Modules.Games.Models;
 using Panacea.Modules.Games.Views;
+using Panacea.Multilinguality;
 using Panacea.Mvvm;
 
 namespace Panacea.Modules.Games.ViewModels
@@ -53,48 +55,29 @@ namespace Panacea.Modules.Games.ViewModels
                     _core.Logger.Error(this, "ui manager not loaded");
                 }
             });
+            IsFavoriteCommand = new RelayCommand((arg) =>
+            {
+            }, (arg) =>
+            {
+                var game = arg as Game;
+                if (_plugin.Favorites == null) return false;
+                return _plugin.Favorites.Any(l => l.Id == game.Id);
+            });
 
-            IsFavoriteCommand = new RelayCommand((arg) => { _core.Logger.Debug(this, "TODO: FAVORITES"); });
-            //TODO: FAVORITES!!!
-            //IsFavoriteCommand = new RelayCommand((arg) =>
-            //{
-            //}, (arg) =>
-            //{
-            //    var game = arg as Game;
-            //    if (plugin.Favorites == null) return false;
-            //    return plugin.Favorites.Any(l => l.Id == game.Id);
-            //});
-            FavoriteCommand = new RelayCommand((arg) => { _core.Logger.Debug(this, "TODO: FAVORITES"); });
-            //FavoriteCommand = new RelayCommand((args) =>
-            //{
-            //    if (userManager.User.ID == null)
-            //    {
-            //        window.RequestLogin(new Translator("Games").Translate("You need an account to add favorites"),
-            //            null, null);
-            //        return;
-            //    }
-            //    var game = args as Game;
-            //    if (game == null) return;
-            //    try
-            //    {
-            //        if (plugin.Favorites.Any(mm => mm.Id == game.Id))
-            //        {
-            //            _server.FavoriteRemove("Games", game.Id);
-            //            plugin.Favorites.Remove(plugin.Favorites.First(mm => mm.Id == game.Id));
-            //            window.ThemeManager.Toast(new Translator("Games").Translate("This game has been removed from your favorites"));
-            //        }
-            //        else
-            //        {
-            //            _server.FavoriteNotify("Games", game.Id);
-            //            plugin.Favorites.Add(game);
-            //            window.ThemeManager.Toast(new Translator("Games").Translate("This game has been added to your favorites"));
-            //        }
-            //        OnPropertyChanged("IsFavoriteCommand");
-            //    }
-            //    catch
-            //    {
-            //    }
-            //});
+            FavoriteCommand = new RelayCommand((args) =>
+            {
+                var game = args as Game;
+                if (game == null) return;
+                if (_core.TryGetFavoritesPlugin(out IFavoritesManager _favoritesManager)){
+                    try
+                    {
+                        _favoritesManager.AddOrRemoveFavoriteAsync("Games", game);
+                    } catch(Exception e)
+                    {
+                        _core.Logger.Error(this, e.Message);
+                    }
+                }
+            });
         }
     }
 }

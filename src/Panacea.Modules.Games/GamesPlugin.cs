@@ -1,6 +1,7 @@
 ﻿using Panacea.Core;
 using Panacea.Models;
 using Panacea.Modularity.Billing;
+using Panacea.Modularity.Content;
 using Panacea.Modularity.Favorites;
 using Panacea.Modularity.UiManager;
 using Panacea.Modularity.WebBrowsing;
@@ -15,9 +16,9 @@ using System.Threading.Tasks;
 
 namespace Panacea.Modules.Games
 {
-    public class GamesPlugin : ICallablePlugin, IHasFavoritesPlugin
+    public class GamesPlugin : ICallablePlugin, IHasFavoritesPlugin, IContentPlugin
     {
-        readonly Translator _translator = new Translator("Games");
+        public readonly Translator translator = new Translator("Games");
         public List<ServerItem> Favorites { get; set; }
         private readonly PanaceaServices _core;
         readonly GamesProvider _provider;
@@ -47,7 +48,7 @@ namespace Panacea.Modules.Games
             return;
         }
 
-        internal async Task OpenItemAsync(ServerItem item)
+        public async Task OpenItemAsync(ServerItem item)
         {
             var game = item as Game;
             if (game == null) return;
@@ -55,7 +56,7 @@ namespace Panacea.Modules.Games
             {
                 if (!_billing.IsPluginFree("Games"))
                 {
-                    var service = await _billing.GetServiceForItemAsync(_translator.Translate("This Game requires service."), "Games", game);
+                    var service = await _billing.GetServiceForItemAsync(translator.Translate("This Game requires service."), "Games", game);
                     if (service == null)
                     {
                         return;
@@ -82,6 +83,11 @@ namespace Panacea.Modules.Games
         public Task Shutdown()
         {
             return Task.CompletedTask;
+        }
+
+        public Type GetContentType()
+        {
+            return typeof(Game);
         }
     }
 }
