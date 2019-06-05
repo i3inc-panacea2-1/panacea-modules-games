@@ -64,14 +64,15 @@ namespace Panacea.Modules.Games.ViewModels
                 return _plugin.Favorites.Any(l => l.Id == game.Id);
             });
 
-            FavoriteCommand = new RelayCommand((args) =>
+            FavoriteCommand = new RelayCommand(async (args) =>
             {
                 var game = args as Game;
                 if (game == null) return;
                 if (_core.TryGetFavoritesPlugin(out IFavoritesManager _favoritesManager)){
                     try
                     {
-                        _favoritesManager.AddOrRemoveFavoriteAsync("Games", game);
+                        await _favoritesManager.AddOrRemoveFavoriteAsync("Games", game);
+                        OnPropertyChanged(nameof(IsFavoriteCommand));
                     } catch(Exception e)
                     {
                         _core.Logger.Error(this, e.Message);

@@ -41,6 +41,7 @@ namespace Panacea.Modules.Games
                 var gamesList = new GameListViewModel(_core, this);
                 ui.Navigate(gamesList);
             }
+            _core.WebSocket.PopularNotifyPage("Games");
         }
 
         public void Dispose()
