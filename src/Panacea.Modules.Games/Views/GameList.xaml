@@ -5,6 +5,7 @@
     xmlns:contentCtrl="clr-namespace:Panacea.ContentControls;assembly=Panacea.ContentControls"
     xmlns:converters="clr-namespace:Panacea.Controls.Converters;assembly=Panacea.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:favorites="clr-namespace:Panacea.Modularity.Favorites;assembly=Panacea.Modularity.Favorites"
     xmlns:games="clr-namespace:Panacea.Modules.Games"
     xmlns:local="clr-namespace:Panacea.Modules.Games.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -19,7 +20,7 @@
         <x:Type Type="viewModels:GameMiniPresenterViewModel" />
     </d:UserControl.DataContext>
     <UserControl.Resources>
-        <converters:BoolToColorConverter x:Key="bcc" />
+        <favorites:BoolToFavoriteConverter x:Key="bcc" />
     </UserControl.Resources>
     <Grid>
         <contentCtrl:LazyLoadingTabControl
@@ -70,18 +71,16 @@
                                 Style="{DynamicResource PrimaryButton}" />
                             <Button
                                 Grid.Column="1"
+                                pcontrols:Material.AsyncCommand="{Binding RelativeSource={RelativeSource AncestorType=local:GameList}, Path=DataContext.FavoriteCommand}"
                                 pcontrols:Material.Icon="favorite"
-                                Command="{Binding RelativeSource={RelativeSource AncestorType=local:GameList}, Path=DataContext.FavoriteCommand}"
                                 CommandParameter="{Binding}"
                                 Style="{DynamicResource PrimaryButton}">
-                                <!--<Button.Background>
+                                <Button.Background>
                                     <MultiBinding Converter="{StaticResource bcc}">
                                         <Binding Path="DataContext.IsFavoriteCommand" RelativeSource="{RelativeSource AncestorType=local:GameList}" />
                                         <Binding />
-                                        <Binding Source="{DynamicResource ColorError}" />
-                                        <Binding Source="{DynamicResource ColorInformation}" />
                                     </MultiBinding>
-                                </Button.Background>-->
+                                </Button.Background>
                             </Button>
                         </Grid>
                     </Grid>

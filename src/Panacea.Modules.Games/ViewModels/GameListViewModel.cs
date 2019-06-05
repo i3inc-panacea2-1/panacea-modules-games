@@ -25,7 +25,7 @@ namespace Panacea.Modules.Games.ViewModels
         public ICommand ItemClickCommand { get; private set; }
         public ICommand InfoClickCommand { get; private set; }
         public ICommand IsFavoriteCommand { get; private set; }
-        public ICommand FavoriteCommand { get; private set; }
+        public AsyncCommand FavoriteCommand { get; private set; }
 
         public GameListViewModel(PanaceaServices core, GamesPlugin plugin)
         {
@@ -64,7 +64,7 @@ namespace Panacea.Modules.Games.ViewModels
                 return _plugin.Favorites.Any(l => l.Id == game.Id);
             });
 
-            FavoriteCommand = new RelayCommand(async (args) =>
+            FavoriteCommand = new AsyncCommand(async (args) =>
             {
                 var game = args as Game;
                 if (game == null) return;
