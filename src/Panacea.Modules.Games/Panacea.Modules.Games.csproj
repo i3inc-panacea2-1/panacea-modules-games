@@ -87,9 +87,6 @@
   <ItemGroup>
     <Compile Include="GamesProvider.cs" />
     <Compile Include="Models\Game.cs" />
-    <Compile Include="Models\GameCategory.cs" />
-    <Compile Include="Models\GameItem.cs" />
-    <Compile Include="Models\GetGamesCategoriesResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
