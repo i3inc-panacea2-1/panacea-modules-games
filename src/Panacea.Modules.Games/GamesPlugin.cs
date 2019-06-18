@@ -57,7 +57,7 @@ namespace Panacea.Modules.Games
             {
                 if (!_billing.IsPluginFree("Games"))
                 {
-                    var service = await _billing.GetServiceForItemAsync(translator.Translate("This Game requires service."), "Games", game);
+                    var service = await _billing.GetOrRequestServiceForItemAsync(translator.Translate("This Game requires service."), "Games", game);
                     if (service == null)
                     {
                         return;
