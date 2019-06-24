@@ -49,7 +49,7 @@
         <TextBlock
             Grid.Row="0"
             Margin="8"
-            pcontrols:Material.RelativeFontSizeRatio="1.5"
+            FontSize="{DynamicResource FontSize-Xx-Large}"
             Text="{Binding Game.Name}"
             TextAlignment="Center"
             TextWrapping="Wrap" />
@@ -124,7 +124,6 @@
             LastChildFill="False">
             <Button
                 pcontrols:Material.Icon="games"
-                pcontrols:Material.RelativeFontSizeRatio="1"
                 Command="{Binding ExecuteGameCommand}"
                 Content="{multilinguality:Translate 'Play game',
                                                     'Games'}"
