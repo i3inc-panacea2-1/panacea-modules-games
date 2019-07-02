@@ -71,8 +71,8 @@ namespace Panacea.Modules.Games.ViewModels
                 if (_core.TryGetFavoritesPlugin(out IFavoritesManager _favoritesManager)){
                     try
                     {
-                        await _favoritesManager.AddOrRemoveFavoriteAsync("Games", game);
-                        OnPropertyChanged(nameof(IsFavoriteCommand));
+                        if (await _favoritesManager.AddOrRemoveFavoriteAsync("Games", game))
+                            OnPropertyChanged(nameof(IsFavoriteCommand));
                     } catch(Exception e)
                     {
                         _core.Logger.Error(this, e.Message);
