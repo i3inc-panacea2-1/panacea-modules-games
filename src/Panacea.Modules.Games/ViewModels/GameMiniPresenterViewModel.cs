@@ -61,7 +61,7 @@ namespace Panacea.Modules.Games.ViewModels
         async void ExecuteGame(object arg)
         {
             SetResult(null);
-            await _plugin.OpenItemAsync(arg as Game);
+            await _plugin.OpenItemAsync(Game);
         }
     }
 }
