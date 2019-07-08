@@ -29,6 +29,8 @@
             Columns="5"
             ItemProvider="{Binding Provider}"
             MaterialIcon="videogame_asset"
+            NoItemsText="{multilinguality:Translate 'No games found',
+                                                    'Games'}"
             OpenItemCommand="{Binding ItemClickCommand}"
             Ratio="1"
             Color="#4CAF50">

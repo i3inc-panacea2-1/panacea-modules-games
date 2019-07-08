@@ -55,13 +55,9 @@ namespace Panacea.Modules.Games
             if (game == null) return;
             if (_core.TryGetBilling(out IBillingManager _billing))
             {
-                if (!_billing.IsPluginFree("Games"))
+                if(!await _billing.RequestServiceAndConsumeItemAsync(translator.Translate("This Game requires service."), "Games", game))
                 {
-                    var service = await _billing.GetOrRequestServiceForItemAsync(translator.Translate("This Game requires service."), "Games", game);
-                    if (service == null)
-                    {
-                        return;
-                    }
+                    return;
                 }
             }
             switch (game.GameType)
